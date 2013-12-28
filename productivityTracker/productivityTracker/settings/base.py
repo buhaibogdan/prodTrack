@@ -1,13 +1,35 @@
 """
     Common settings here.
 """
-import os
+from os.path import abspath, basename, dirname, join, normpath
+from os import environ
+from sys import path
 
 from django.core.exceptions import ImproperlyConfigured
 
+
+########## PATH CONFIGURATION
+# Absolute filesystem path to the Django project directory:
+DJANGO_ROOT = dirname(dirname(abspath(__file__)))
+
+# Absolute filesystem path to the top-level project folder:
+SITE_ROOT = dirname(DJANGO_ROOT)
+
+# Site name:
+SITE_NAME = basename(DJANGO_ROOT)
+
+# Add our project to our pythonpath, this way we don't need to type our project
+# name in our dotted import paths:
+path.append(DJANGO_ROOT)
+########## END PATH CONFIGURATION
+
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = dirname(dirname(__file__))
 ALLOWED_HOSTS = []
 
-
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'm+zj&82l-k@1gs@e^=_zx$*jw^cri5ds5f@(jynxzqu4-rji-!'
 # Application definition
 
 INSTALLED_APPS = (
@@ -17,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'activities',
+    'tastypie'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -47,21 +71,38 @@ USE_L10N = True
 
 USE_TZ = True
 
+########## STATIC FILE CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
+STATIC_ROOT = normpath(join(SITE_ROOT, 'assets'))
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
-
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 
-"""
-    Handling environment variables (with secret stuff)
-"""
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
+STATICFILES_DIRS = (
+    normpath(join(SITE_ROOT, 'static')),
+)
+
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+########## END STATIC FILE CONFIGURATION
+
+########## TEMPLATE CONFIGURATION
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
+TEMPLATE_DIRS = (
+    normpath(join(SITE_ROOT, 'templates')),
+)
+########## END TEMPLATE CONFIGURATION
 
 
 def get_env_variable(var_name):
     """ Get the environment variable or return exception """
     try:
-        return os.environ[var_name]
+        return environ[var_name]
     except KeyError:
         error_msg = "Set the %s environment variable" % var_name
         raise ImproperlyConfigured(error_msg)

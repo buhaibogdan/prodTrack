@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %} ProdTrackAPI {% endblock %}
+{% block content %}
+
+    <div>ProdTracker API description.</div>
+    <div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Resource</th>
+                <th>Method</th>
+                <th>Response</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>/activities</code></td>
+                <td><code>GET</code></td>
+                <td><code>JSON: {ok:1, numResults:2, results:[]}</code></td>
+                <td>Activities of the logged in user.</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+{% endblock %}
