@@ -30,7 +30,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'prodTrack',
         'USER': 'postgres',
-        'PASSWORD': 'bb',
+        'PASSWORD': POSTGRESQL_PASSWORD,
         'HOST': 'localhost',
         'PORT': 5432
     }
