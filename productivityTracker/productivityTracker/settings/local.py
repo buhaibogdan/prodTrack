@@ -11,11 +11,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 from .base import *
 
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -38,5 +35,6 @@ DATABASES = {
         'PORT': 5432
     }
 }
+XS_SHARING_ALLOWED_ORIGINS = "http://127.0.0.1:9000"
 
 # --settings=productivity-tracker.settings.local

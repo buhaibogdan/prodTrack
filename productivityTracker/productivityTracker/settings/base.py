@@ -7,7 +7,6 @@ from sys import path
 
 from django.core.exceptions import ImproperlyConfigured
 
-
 ########## PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
@@ -50,6 +49,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.crossdomainxhr.XsSharing'
 )
 
 ROOT_URLCONF = 'productivityTracker.urls'
@@ -98,6 +98,11 @@ TEMPLATE_DIRS = (
 )
 ########## END TEMPLATE CONFIGURATION
 
+########## CORS CONFIG
+XS_SHARING_ALLOWED_METHODS = ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE']
+XS_SHARING_ALLOWED_HEADERS = ['Content-Type', '*']
+XS_SHARING_ALLOWED_CREDENTIALS = 'true'
+########## END CORS CONFIG
 
 def get_env_variable(var_name):
     """ Get the environment variable or return exception """

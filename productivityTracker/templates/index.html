@@ -4,23 +4,68 @@
 
     <div>ProdTracker API description.</div>
     <div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <th>Resource</th>
-                <th>Method</th>
-                <th>Response</th>
+                <th class="med-col">Resource</th>
+                <th class="slim-col">Method</th>
                 <th>Description</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr>
-                <td><code>/activities</code></td>
+                <td><code>/v1/activities</code></td>
                 <td><code>GET</code></td>
-                <td><code>JSON: {ok:1, numResults:2, results:[]}</code></td>
-                <td>Activities of the logged in user.</td>
+                <td>Activities of the logged in user.
+                    <code>{"meta": {"limit": 20, "next": null, "offset": 0, "previous": null, "total_count": 3},
+                    "objects": [{"description": "use it for a restful client", "id": 4, "name": "Practice AngularJs", "resource_uri": ""}, {"description": "one recipe per week", "id": 5, "name": "Learn to cook", "resource_uri": ""}, {"description": "", "id": 6, "name": "Play", "resource_uri": ""}]}</code></td>
             </tr>
-        </tbody>
-    </table>
+            <tr>
+                <td>
+                    <code>/v1/activities/{activityId}</code>
+                </td>
+                <td>
+                    <code>GET</code>
+                </td>
+                <td>
+                    A specific activity for the currently authenticated user.
+                    <code>{"description": "one recipe per week", "id": 5, "name": "Learn to cook", "resource_uri": ""}</code>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <code>/v1/logs</code>
+                </td>
+                <td>
+                    <code>GET</code>
+                </td>
+                <td>
+                    <code>JSON:</code>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <code>/v1/logs/{startDate};{endDate}</code>
+                </td>
+                <td>
+                    <code>GET</code>
+                </td>
+                <td>
+                    <code>JSON:</code>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <code>/v1/activities/{activityId}</code>
+                </td>
+                <td>
+                    <code>GET</code>
+                </td>
+                <td>
+                    <code>JSON:</code>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 {% endblock %}
