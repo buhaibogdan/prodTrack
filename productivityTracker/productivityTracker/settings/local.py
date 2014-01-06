@@ -35,6 +35,7 @@ DATABASES = {
         'PORT': 5432
     }
 }
-XS_SHARING_ALLOWED_ORIGINS = "http://127.0.0.1:9000"
 
-# --settings=productivity-tracker.settings.local
+XS_SHARING_ALLOWED_ORIGINS = "*"
+
+# --settings=productivityTracker.settings.local

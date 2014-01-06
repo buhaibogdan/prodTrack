@@ -26,6 +26,8 @@ path.append(DJANGO_ROOT)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = dirname(dirname(__file__))
 ALLOWED_HOSTS = []
+APPEND_SLASH = False
+TASTYPIE_ALLOW_MISSING_SLASH = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'm+zj&82l-k@1gs@e^=_zx$*jw^cri5ds5f@(jynxzqu4-rji-!'
@@ -102,7 +104,9 @@ TEMPLATE_DIRS = (
 XS_SHARING_ALLOWED_METHODS = ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE']
 XS_SHARING_ALLOWED_HEADERS = ['Content-Type', '*']
 XS_SHARING_ALLOWED_CREDENTIALS = 'true'
+XS_SHARING_ALLOWED_ORIGINS = "*"
 ########## END CORS CONFIG
+
 
 def get_env_variable(var_name):
     """ Get the environment variable or return exception """

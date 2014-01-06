@@ -27,7 +27,6 @@ class XsSharing(object):
     Based off https://gist.github.com/426829
     """
     def process_request(self, request):
-        print XS_SHARING_ALLOWED_ORIGINS
         if 'HTTP_ACCESS_CONTROL_REQUEST_METHOD' in request.META:
             response = http.HttpResponse()
             response['Access-Control-Allow-Origin'] = XS_SHARING_ALLOWED_ORIGINS
