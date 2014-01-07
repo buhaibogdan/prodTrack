@@ -4,7 +4,7 @@ from tastypie.authorization import Authorization
 from tastypie import fields
 from django.contrib.auth.models import User
 from django.conf.urls import url
-from models import Activity, ActivityLog, Target
+from models import Activity, ActivityLog
 
 
 class JsonResource(ModelResource):
@@ -20,7 +20,7 @@ class UsersResource(JsonResource):
 
 
 class ActivitiesResource(JsonResource):
-    user = fields.ForeignKey(UsersResource, 'user', full=True)
+    user = fields.ForeignKey(UsersResource, 'user')
 
     class Meta:
         queryset = Activity.objects.all()

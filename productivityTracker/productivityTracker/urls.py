@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
                        # maybe reconsider the next url regex
-                       url(r'^', include('activities.urls', namespace='activity')),
+                       url(r'^', include('activities.urls')),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^$', view=views.index)
-)
+                       )

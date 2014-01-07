@@ -8,5 +8,4 @@ v1_api.register(api.LogsResource())
 v1_api.register(api.UsersResource())
 
 urlpatterns = patterns('',
-                       url(r'^', include(v1_api.urls)),
-                       url(r'^[0-9\-]+;[0-9\-]+', api))
+                       url(r'^', include(v1_api.urls)))

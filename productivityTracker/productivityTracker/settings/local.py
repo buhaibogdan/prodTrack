@@ -38,4 +38,5 @@ DATABASES = {
 
 XS_SHARING_ALLOWED_ORIGINS = "*"
 
+TASTYPIE_FULL_DEBUG = True
 # --settings=productivityTracker.settings.local
