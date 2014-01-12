@@ -1,6 +1,8 @@
+from django.contrib.auth import authenticate, login, logout
 from tastypie.resources import ModelResource
 from tastypie.utils import trailing_slash
 from tastypie.authorization import Authorization
+from tastypie.http import HttpForbidden, HttpUnauthorized
 from tastypie import fields
 from django.contrib.auth.models import User
 from django.conf.urls import url
@@ -21,7 +23,7 @@ class UsersResource(JsonResource):
         resource_name = 'users'
         excludes = ['is_staff', 'is_superuser', 'date_joined', 'last_login', 'password']
 
-    def override_urls(self):
+    def prepend_urls(self):
         return [
             url(r"^(?P<resource_name>%s)/login%s$" %
                 (self._meta.resource_name, trailing_slash()),
@@ -32,12 +34,31 @@ class UsersResource(JsonResource):
         ]
 
     def login(self, request, **kwargs):
-        print 'haha'
-        return self.create_response(request, { 'success': True })
+        self.method_check(request, allowed=['post'])
+        print request.POST
+        username = request.POST.get('username', 'bb')
+        password = request.POST.get('password', 'bb')
+
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return self.create_response(request, {'success': True})
+            return self.create_response(request, {
+                'success': False,
+                'reason': 'disabled',
+            }, HttpForbidden)
+        return self.create_response(request, {
+            'success': False,
+            'reason': 'incorrect'
+        }, HttpUnauthorized)
 
     def logout(self, request, **kwargs):
-        print "hihi"
-        return self.create_response(request, { 'success': True })
+        self.method_check(request, allowed=['post'])
+        if request.user and request.user.is_authenticated:
+            logout(request)
+            return self.create_response(request, {'success': True})
+        return self.create_response(request, {'success': False}, HttpUnauthorized)
 
 
 class ActivitiesResource(JsonResource):
@@ -77,8 +98,11 @@ class LogsResource(JsonResource):
     def get_logs_between_dates(self, request, **kwargs):
 
         print kwargs['start_date']
+        print request.user
         print kwargs['end_date']
-        raise NotImplementedError()
+        return self.create_response(request, {'success': 'kinda'})
+
+        #raise NotImplementedError()
 
     def get_object_list(self, request):
         """
