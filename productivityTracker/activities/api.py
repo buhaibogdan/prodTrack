@@ -16,6 +16,10 @@ class JsonResource(ModelResource):
     def determine_format(self, request):
         return 'application/json'
 
+    def serialize_queryset(self, query_set, request):
+        bundles = [self.build_bundle(item, request=request) for item in query_set]
+        return [self.full_dehydrate(bundle) for bundle in bundles]
+
 
 class UsersResource(JsonResource):
     class Meta:
@@ -82,6 +86,7 @@ class TargetsResource(JsonResource):
 
 class LogsResource(JsonResource):
     user = fields.ForeignKey(UsersResource, 'user')
+    activity = fields.ForeignKey(ActivitiesResource, 'activity')
 
     class Meta:
         queryset = ActivityLog.objects.all()
@@ -97,20 +102,10 @@ class LogsResource(JsonResource):
 
     def get_logs_between_dates(self, request, **kwargs):
 
-        print kwargs['start_date']
-        print request.user
-        print kwargs['end_date']
-        return self.create_response(request, {'success': 'kinda'})
+        start_date = kwargs['start_date']
+        end_date = kwargs['end_date']
 
-        #raise NotImplementedError()
+        query_set = ActivityLog.objects.filter(created_at__gte=start_date, created_at__lte=end_date)
+        data = self.serialize_queryset(query_set, request)
 
-    def get_object_list(self, request):
-        """
-            Here we get the request params and retrieve the objects based on them.
-        """
-        try:
-            startDate = request.GET['startDate']
-            endDate = request.GET['endDate']
-        except KeyError:
-            pass
-        return super(LogsResource, self).get_object_list(request)
+        return self.create_response(request, data)
